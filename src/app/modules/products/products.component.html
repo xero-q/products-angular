@@ -1,0 +1,47 @@
+<p-table
+  [value]="productsList()"
+  dataKey="id"
+  (onPage)="onPageChange($event)"
+  [resizableColumns]="true"
+  [loading]="isLoading"
+  [loadingIcon]="'pi pi-spinner'"  
+>
+  <ng-template pTemplate="caption">
+    <div class="header-table">
+      <div>Products</div>
+      <p-button icon="pi pi-refresh" (click)="loadProducts()" />
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="th-name" pResizableColumn>Code</th>
+      <th class="th-size" pResizableColumn>Name</th>
+      <th class="th-status" pResizableColumn>Price</th>
+      <th class="th-status" pResizableColumn>Shipment Cost</th>
+      <th class="th-download" pResizableColumn>Download Link</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+    <tr [ngStyle]="{ height: '80px'}">
+        <td>{{product.code}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.price | currency:'USD'}}</td>
+        <td>{{product.shipmentCost | currency:'USD'}}</td>
+        <td>{{product.downloadLink}}</td>     
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+      In total there are {{ total }} files
+    </div>
+    <div class="card flex justify-content-center">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="0"
+        [rows]="pageSize"
+        [totalRecords]="total"
+      />
+    </div>
+  </ng-template>
+</p-table>
