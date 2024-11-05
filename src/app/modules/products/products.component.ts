@@ -6,6 +6,7 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-products',
@@ -21,14 +22,13 @@ export class ProductsComponent {
   page = 1;
   pageSize = 20;
 
-  constructor (private productsService: ProductsService){}
+  constructor (private productsService: ProductsService,private toastr: ToastrService){}
 
   ngOnInit(){
     this.loadProducts();
   }
 
   public loadProducts(){
-    this.productsList.set([]);
     this.isLoading = true;
     this.productsService
     .getProducts(this.page, this.pageSize)
@@ -37,11 +37,11 @@ export class ProductsComponent {
         console.log({response});  
         this.isLoading = false;
         this.total = response.total;
-        this.productsList.set([...response.results as Product[]]);
+        this.productsList.set([...response.results as Product[]]);      
       },
       error:()=>{
         this.isLoading = false;  
-        // this.toastr.error('Error while fetching the files','Error');
+        this.toastr.error('Error while fetching the products','Error');
       }
     })       
   }
@@ -49,5 +49,19 @@ export class ProductsComponent {
   onPageChange(event: any){
     this.page = event.page + 1;
     this.loadProducts();
+  }
+
+  deleteProduct(product: Product){
+    if (confirm(`Are you sure you want to delete the product '${product.name}'`)){
+     this.productsService.deleteProduct(product.id).subscribe({
+      next:()=>{
+        this.toastr.success('Product deleted successfully','Success');
+        this.loadProducts();
+      },
+      error:()=>{
+        this.toastr.error('Error while deleting the product','Error');
+      }
+     })
+    }
   }
 }

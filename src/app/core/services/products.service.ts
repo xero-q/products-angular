@@ -15,4 +15,8 @@ export class ProductsService {
   getProducts(page:number,pageSize:number): Observable<any> {  
     return this.http.get<any>(`${this.productsUrl}/all?page=${page}&pageSize=${pageSize}`);    
   }  
+
+  deleteProduct(productId: number):Observable<any>{
+    return this.http.delete<any>(`${this.productsUrl}/${productId}`);   
+  }
 }

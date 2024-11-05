@@ -1,0 +1,52 @@
+@media (400px > width) {
+    .th-name {
+      width: 20px;
+    }  
+  }
+  
+  @media (401px <= width <= 1024px) {
+    .th-name {
+      width: 400px;
+    }   
+  }
+  
+  @media (width > 1024px) {
+    .th-name {
+      width: 700px;
+    }  
+  }
+  
+  @media (width >= 1920px) {
+    .th-name {
+      width: 900px;
+    }   
+  }
+  
+  :host {
+    max-width: 95%;
+  }
+  
+  ::ng-deep .button-show button {
+    margin-bottom: 20px;
+  }
+  
+  ::ng-deep .p-datatable {
+    tr > td {
+      height: 80px;
+      vertical-align: center;
+    }
+  
+    td:first-child {
+      white-space: normal;
+      word-wrap: break-word;
+      word-break: break-all;
+    } 
+ 
+  }
+  
+  .header-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

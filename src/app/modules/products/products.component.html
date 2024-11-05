@@ -14,11 +14,13 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th class="th-name" pResizableColumn>Code</th>
-      <th class="th-size" pResizableColumn>Name</th>
+      <th class="th-code" pResizableColumn>Code</th>
+      <th class="th-name" pResizableColumn>Name</th>
       <th class="th-status" pResizableColumn>Price</th>
       <th class="th-status" pResizableColumn>Shipment Cost</th>
       <th class="th-download" pResizableColumn>Download Link</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
@@ -27,7 +29,17 @@
         <td>{{product.name}}</td>
         <td>{{product.price | currency:'USD'}}</td>
         <td>{{product.shipmentCost | currency:'USD'}}</td>
-        <td>{{product.downloadLink}}</td>     
+        <td><a [href]="product.downloadLink">{{product.downloadLink}}</a></td>     
+        <th>&nbsp;</th>
+        <th>
+          <button 
+          pButton 
+          pRipple 
+           label="Delete" 
+           (click)="deleteProduct(product)"
+          class="p-button-danger">
+        </button>
+        </th>
     </tr>
   </ng-template>
 
