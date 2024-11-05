@@ -19,4 +19,16 @@ export class ProductsService {
   deleteProduct(productId: number):Observable<any>{
     return this.http.delete<any>(`${this.productsUrl}/${productId}`);   
   }
+
+  createProduct(type: 'digital' | 'physical',productData: Product): Observable<Product> {
+    const productDataValidated = {
+      ...productData,
+      price: Number(productData.price)      
+    }
+
+    if (type === 'physical'){
+      productDataValidated.shipmentCost = Number(productDataValidated.shipmentCost);
+    }
+    return this.http.post<Product>(`${this.productsUrl}/${type}`,productDataValidated);
+  }
 }

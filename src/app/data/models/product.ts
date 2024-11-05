@@ -4,5 +4,5 @@ export interface Product {
     name: string;
     price: number;
     downloadLink: string;
-    shipmenCost: number;
+    shipmentCost: number;
 }

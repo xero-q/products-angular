@@ -7,11 +7,12 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { ToastrService } from 'ngx-toastr';
+import { ProductFormComponent } from '../../core/components/product-form/product-form.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [TableModule, PaginatorModule, TagModule,ButtonModule, NgStyle, NgIf,CommonModule],
+  imports: [TableModule, PaginatorModule, TagModule,ButtonModule, NgStyle, NgIf,CommonModule, ProductFormComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })

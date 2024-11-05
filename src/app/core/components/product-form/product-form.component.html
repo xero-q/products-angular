@@ -1,0 +1,51 @@
+<div class="container">
+<p-card header="Product Form">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12">
+          <label for="code">Code</label>
+          <input pInputText id="code" formControlName="code" />
+          <div *ngIf="code && code.invalid && (code.dirty || code.touched)" class="p-error">
+            <div *ngIf="code.errors && code.errors['required']">Code is required</div>
+          </div>
+        </div>
+  
+        <div class="p-field p-col-12">
+          <label for="name">Name</label>
+          <input pInputText id="name" formControlName="name" />
+          <div *ngIf="name && name.invalid && (name.dirty || name.touched)" class="p-error">
+            <div *ngIf="name.errors && name.errors['required']">Name is required</div>
+          </div>
+        </div>
+  
+        <div class="p-field p-col-12">
+          <label for="price">Price</label>
+          <input pInputNumber id="price" formControlName="price" mode="currency" currency="USD" />
+          <div *ngIf="price && price.invalid && (price.dirty || price.touched)" class="p-error">
+            <div *ngIf="price.errors && price.errors['required']">Price is required</div>
+          </div>
+        </div>
+  
+        <div class="p-field p-col-12">
+          <label for="type">Product Type</label>
+          <p-dropdown id="type" [options]="productTypes" formControlName="type" optionLabel="label" optionValue="value"></p-dropdown>
+        </div>
+ 
+        <div *ngIf="type?.value === 'digital'" class="p-field p-col-12">
+          <label for="downloadLink">Download Link</label>
+          <input pInputText id="downloadLink" formControlName="downloadLink" />
+        </div>
+  
+        <div *ngIf="type?.value === 'physical'" class="p-field p-col-12">
+          <label for="shipmentCost">Shipment Cost</label>
+          <input pInputNumber id="shipmentCost" formControlName="shipmentCost" mode="currency" currency="USD" />
+        </div>
+  
+        <div class="p-col-12">
+          <button pButton type="submit" label="Save" icon="pi pi-check" [disabled]="productForm.invalid"></button>
+        </div>
+      </div>
+    </form>
+  </p-card>
+  
+</div>
