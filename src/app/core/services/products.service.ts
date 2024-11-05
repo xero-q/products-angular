@@ -31,4 +31,21 @@ export class ProductsService {
     }
     return this.http.post<Product>(`${this.productsUrl}/${type}`,productDataValidated);
   }
+
+  getSingleProduct(id:number): Observable<Product> {  
+    return this.http.get<Product>(`${this.productsUrl}/${id}`);    
+  } 
+  
+  updateProduct(type: 'digital' | 'physical', id: number, productData: Product): Observable<Product>{
+    const productDataValidated = {
+      ...productData,
+      price: Number(productData.price)      
+    }
+
+    if (type === 'physical'){
+      productDataValidated.shipmentCost = Number(productDataValidated.shipmentCost);
+    }
+
+    return this.http.put<Product>(`${this.productsUrl}/${type}/${id}`,productDataValidated);
+  }
 }

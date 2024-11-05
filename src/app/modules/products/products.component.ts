@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Product } from '../../data/models/product';
 import { ProductsService } from '../../core/services/products.service';
 import { NgStyle, NgIf, CommonModule } from '@angular/common';
@@ -8,9 +8,11 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { ToastrService } from 'ngx-toastr';
 import { ProductFormComponent } from '../../core/components/product-form/product-form.component';
+import { ROUTES } from '../../shared/routes';
 
 @Component({
   selector: 'app-products',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
   imports: [TableModule, PaginatorModule, TagModule,ButtonModule, NgStyle, NgIf,CommonModule, ProductFormComponent],
   templateUrl: './products.component.html',
@@ -22,6 +24,8 @@ export class ProductsComponent {
   total = 0;
   page = 1;
   pageSize = 20;
+  addProductVisible = false;
+  routes = ROUTES;
 
   constructor (private productsService: ProductsService,private toastr: ToastrService){}
 

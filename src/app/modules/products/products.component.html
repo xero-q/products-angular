@@ -1,4 +1,13 @@
-<app-product-form (submitSuccess)="loadProducts()"></app-product-form>
+<p-button
+  class="button-show"
+  (click)="addProductVisible = !addProductVisible"
+  [label]="addProductVisible ? 'Hide Add Product': 'Show Add Product'"
+>
+</p-button>
+<div *ngIf="addProductVisible">
+  <app-product-form (submitSuccess)="loadProducts()"></app-product-form>
+</div>
+
 <p-table
   [value]="productsList()"
   dataKey="id"
@@ -31,7 +40,9 @@
         <td>{{product.price | currency:'USD'}}</td>
         <td>{{product.shipmentCost | currency:'USD'}}</td>
         <td><a [href]="product.downloadLink">{{product.downloadLink}}</a></td>     
-        <th>&nbsp;</th>
+        <th>
+         &nbsp;
+        </th>
         <th>
           <button 
           pButton 

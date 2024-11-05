@@ -1,0 +1,11 @@
+@if (id){
+    @if (notFound){
+        <h1>NOT FOUND</h1>
+    }
+    @else if (loading){
+        <h1>LOADING...</h1>
+    }
+    @else if (product){
+        <app-product-form [product]="product"></app-product-form>
+    }
+}

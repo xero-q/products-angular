@@ -29,6 +29,9 @@
         <div class="p-field p-col-12">
           <label for="type">Product Type</label>
           <p-dropdown id="type" [options]="productTypes" formControlName="type" optionLabel="label" optionValue="value"></p-dropdown>
+          <div *ngIf="type && type.invalid && (type.dirty || type.touched)" class="p-error">
+            <div *ngIf="type.errors && type.errors['required']">Type is required</div>
+          </div>
         </div>
  
         <div *ngIf="type?.value === 'digital'" class="p-field p-col-12">

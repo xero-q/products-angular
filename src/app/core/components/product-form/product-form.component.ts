@@ -78,10 +78,16 @@ export class ProductFormComponent implements OnInit {
     const productData: Product = this.productForm.value;
 
     if (this.product) {
-      // Update Product
-      // this.productsService.updateProduct(this.product.id, productData).subscribe(() => this.showMessage('success', 'Product updated successfully'),
-      //   () => this.showMessage('error', 'Error updating product')
-      // );
+      this.productsService.updateProduct(this.type?.value, this.product.id, productData).subscribe({
+        next:()=>{
+          this.toastr.success('Product updated successfully', 'Success');
+          this.submitSuccess.emit();
+        },
+        error:()=>{
+          this.toastr.error('Error updating product', 'Error');
+        }
+      }
+      );
     } else {
       // Create Product
       this.productsService.createProduct(this.type?.value,productData).subscribe({
@@ -112,4 +118,14 @@ export class ProductFormComponent implements OnInit {
   get type(){
     return this.productForm.get('type');
   }
+
+  get downloadLink(){
+    return this.productForm.get('downloadLink');
+  }
+
+  get shipmentCost(){
+    return this.productForm.get('shipmentCost');
+  }
+
+
 }
