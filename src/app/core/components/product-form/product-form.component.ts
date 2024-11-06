@@ -55,23 +55,23 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productForm.get('type')?.valueChanges.subscribe((type) => {
+    this.type?.valueChanges.subscribe((type) => {
       if (type === 'digital') {
-        this.productForm.get('downloadLink')?.setValidators(Validators.required);
-        this.productForm.get('shipmentCost')?.clearValidators();
-        this.productForm.get('shipmentCost')?.setValue(null);
+        this.downloadLink?.setValidators(Validators.required);
+        this.shipmentCost?.clearValidators();
+        this.shipmentCost?.setValue(null);
       } else {
-        this.productForm.get('shipmentCost')?.setValidators([Validators.required, Validators.min(0.01)]);
-        this.productForm.get('downloadLink')?.clearValidators();
-        this.productForm.get('downloadLink')?.setValue(null);
+        this.shipmentCost?.setValidators([Validators.required, Validators.min(0.01)]);
+        this.downloadLink?.clearValidators();
+        this.downloadLink?.setValue(null);
       }
-      this.productForm.get('downloadLink')?.updateValueAndValidity();
-      this.productForm.get('shipmentCost')?.updateValueAndValidity();
+      this.downloadLink?.updateValueAndValidity();
+      this.shipmentCost?.updateValueAndValidity();
     });
 
     if (this.product) {
       this.productForm.patchValue(this.product);
-      this.productForm.get('type')?.setValue(this.product.downloadLink ? 'digital' : 'physical');
+      this.type?.setValue(this.product.downloadLink ? 'digital' : 'physical');
     }
   }
 
