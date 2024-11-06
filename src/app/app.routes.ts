@@ -6,5 +6,6 @@ import { ProductComponent } from './modules/product/product.component';
 export const routes: Routes = [
     { path: ROUTES.PRODUCTS, component: ProductsComponent },  
     { path: ROUTES.PRODUCTS+'/:id', component: ProductComponent },  
+    {path:'**', redirectTo:ROUTES.PRODUCTS}
 
 ];

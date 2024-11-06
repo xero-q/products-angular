@@ -1,12 +1,17 @@
 <p-button
   class="button-show"
   (click)="addProductVisible = !addProductVisible"
-  [label]="addProductVisible ? 'Hide Add Product': 'Show Add Product'"
+  [label]="addProductVisible ? 'Hide Add Product': 'Add Product'"
 >
 </p-button>
 <div *ngIf="addProductVisible">
   <app-product-form (submitSuccess)="loadProducts()"></app-product-form>
 </div>
+
+<div class="search">
+  <label>Search: </label>
+  <input type="text" [(value)]="search" (input)="searchProducts($event)" placeholder="Search products"/>
+<div>
 
 <p-table
   [value]="productsList()"
@@ -41,7 +46,13 @@
         <td>{{product.shipmentCost | currency:'USD'}}</td>
         <td><a [href]="product.downloadLink">{{product.downloadLink}}</a></td>     
         <th>
-         &nbsp;
+          <button 
+          pButton 
+          pRipple 
+           label="Edit" 
+           (click)="editProduct(product)"
+          class="p-button-success">
+        </button>
         </th>
         <th>
           <button 

@@ -9,6 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
+import { ROUTES } from '../../../shared/routes';
 
 @Component({
   standalone:true,
@@ -38,16 +40,17 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productsService: ProductsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router:Router
   ) {
     this.productForm = this.fb.group({
       id: [null],
       code: ['', Validators.required],
       name: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0)]],
+      price: [0.01, [Validators.required, Validators.min(0.01)]],
       type: ['', Validators.required],
       downloadLink: [''],
-      shipmentCost: [0]
+      shipmentCost: [0.01]
     });
   }
 
@@ -63,7 +66,7 @@ export class ProductFormComponent implements OnInit {
         this.productForm.get('shipmentCost')?.clearValidators();
         this.productForm.get('shipmentCost')?.setValue(null);
       } else {
-        this.productForm.get('shipmentCost')?.setValidators([Validators.required, Validators.min(0)]);
+        this.productForm.get('shipmentCost')?.setValidators([Validators.required, Validators.min(0.01)]);
         this.productForm.get('downloadLink')?.clearValidators();
         this.productForm.get('downloadLink')?.setValue(null);
       }
@@ -82,6 +85,7 @@ export class ProductFormComponent implements OnInit {
         next:()=>{
           this.toastr.success('Product updated successfully', 'Success');
           this.submitSuccess.emit();
+          this.router.navigate(['/'+ROUTES.PRODUCTS]);
         },
         error:()=>{
           this.toastr.error('Error updating product', 'Error');
@@ -89,11 +93,11 @@ export class ProductFormComponent implements OnInit {
       }
       );
     } else {
-      // Create Product
       this.productsService.createProduct(this.type?.value,productData).subscribe({
         next:()=>{
           this.toastr.success('Product created successfully', 'Success');
           this.submitSuccess.emit();
+          this.productForm.reset();
         },
         error:()=>{
           this.toastr.error('Error creating product', 'Error');

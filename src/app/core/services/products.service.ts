@@ -12,8 +12,8 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page:number,pageSize:number): Observable<any> {  
-    return this.http.get<any>(`${this.productsUrl}/all?page=${page}&pageSize=${pageSize}`);    
+  getProducts(page:number,pageSize:number, search: string = ''): Observable<any> {  
+    return this.http.get<any>(`${this.productsUrl}/all?page=${page}&pageSize=${pageSize}&search=${search}`);    
   }  
 
   deleteProduct(productId: number):Observable<any>{

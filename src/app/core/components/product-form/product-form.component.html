@@ -1,5 +1,5 @@
 <div class="container">
-<p-card header="Product Form">
+<p-card [header]="product ? 'Update Product':'Create Product'">
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col-12">
@@ -20,9 +20,10 @@
   
         <div class="p-field p-col-12">
           <label for="price">Price</label>
-          <input pInputNumber id="price" formControlName="price" mode="currency" currency="USD" />
+          <input pInputText id="price" formControlName="price" />
           <div *ngIf="price && price.invalid && (price.dirty || price.touched)" class="p-error">
             <div *ngIf="price.errors && price.errors['required']">Price is required</div>
+            <div *ngIf="price.errors && price.errors['min']">Price must be bigger or equal than 0.01</div>
           </div>
         </div>
   
@@ -37,15 +38,22 @@
         <div *ngIf="type?.value === 'digital'" class="p-field p-col-12">
           <label for="downloadLink">Download Link</label>
           <input pInputText id="downloadLink" formControlName="downloadLink" />
+          <div *ngIf="downloadLink && downloadLink.invalid && (downloadLink.dirty || downloadLink.touched)" class="p-error">
+            <div *ngIf="downloadLink.errors && downloadLink.errors['required']">DownloadLink is required</div>          
+          </div>
         </div>
   
         <div *ngIf="type?.value === 'physical'" class="p-field p-col-12">
           <label for="shipmentCost">Shipment Cost</label>
-          <input pInputNumber id="shipmentCost" formControlName="shipmentCost" mode="currency" currency="USD" />
+          <input pInputText id="shipmentCost" formControlName="shipmentCost"  />
+          <div *ngIf="shipmentCost && shipmentCost.invalid && (shipmentCost.dirty || shipmentCost.touched)" class="p-error">
+            <div *ngIf="shipmentCost.errors && shipmentCost.errors['required']">ShipmentCost is required</div>
+            <div *ngIf="shipmentCost.errors && shipmentCost.errors['min']">ShipmentCost must be bigger or equal than 0.01</div>
+          </div>
         </div>
   
-        <div class="p-col-12">
-          <button pButton type="submit" label="Save" icon="pi pi-check" [disabled]="productForm.invalid"></button>
+        <div class="p-col-12 mt-2">
+          <button pButton type="submit" label="Submit" [disabled]="productForm.invalid"></button>
         </div>
       </div>
     </form>

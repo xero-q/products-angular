@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastrService } from 'ngx-toastr';
 import { ProductFormComponent } from '../../core/components/product-form/product-form.component';
 import { ROUTES } from '../../shared/routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -26,17 +27,18 @@ export class ProductsComponent {
   pageSize = 20;
   addProductVisible = false;
   routes = ROUTES;
+  search = '';
 
-  constructor (private productsService: ProductsService,private toastr: ToastrService){}
+  constructor (private productsService: ProductsService,private toastr: ToastrService, private router: Router){}
 
   ngOnInit(){
+    this.isLoading = true;
     this.loadProducts();
   }
 
   public loadProducts(){
-    this.isLoading = true;
     this.productsService
-    .getProducts(this.page, this.pageSize)
+    .getProducts(this.page, this.pageSize, this.search)
     .subscribe({
       next:(response: any)=>{
         console.log({response});  
@@ -68,5 +70,14 @@ export class ProductsComponent {
       }
      })
     }
+  }
+
+  editProduct(product: Product){
+      this.router.navigateByUrl(`${ROUTES.PRODUCTS}/${product.id}`)
+  }
+
+  searchProducts(event:any){
+    this.search = event.target.value;    
+    this.loadProducts();      
   }
 }
