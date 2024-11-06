@@ -55,11 +55,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.product) {
-      this.productForm.patchValue(this.product);
-      this.productForm.get('type')?.setValue(this.product.downloadLink ? 'digital' : 'physical');
-    }
-
     this.productForm.get('type')?.valueChanges.subscribe((type) => {
       if (type === 'digital') {
         this.productForm.get('downloadLink')?.setValidators(Validators.required);
@@ -73,6 +68,11 @@ export class ProductFormComponent implements OnInit {
       this.productForm.get('downloadLink')?.updateValueAndValidity();
       this.productForm.get('shipmentCost')?.updateValueAndValidity();
     });
+
+    if (this.product) {
+      this.productForm.patchValue(this.product);
+      this.productForm.get('type')?.setValue(this.product.downloadLink ? 'digital' : 'physical');
+    }
   }
 
   onSubmit() {
